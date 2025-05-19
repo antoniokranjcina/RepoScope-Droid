@@ -11,6 +11,8 @@ public data class GitHubRepo(
     val name: String,
     @SerialName("full_name")
     val fullName: String,
+    @SerialName("owner")
+    val owner: Owner,
     @SerialName("html_url")
     val htmlUrl: String,
     @SerialName("description")
