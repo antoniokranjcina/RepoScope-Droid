@@ -2,6 +2,7 @@ package com.antoniok.reposcope.datasource.remote
 
 import com.antoniok.reposcope.datasource.remote.api.KtorGitHubNetwork
 import com.antoniok.reposcope.datasource.remote.model.GitHubRepo
+import com.antoniok.reposcope.datasource.remote.model.Owner
 import com.antoniok.reposcope.datasource.remote.resource.NetworkResource
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
@@ -64,7 +65,12 @@ class KtorGitHubNetworkTest {
                 fullName = "square/Repo1",
                 htmlUrl = "https://github.com/square/Repo1",
                 description = "Test repo",
-                language = "Kotlin"
+                language = "Kotlin",
+                owner = Owner(
+                    id = 1,
+                    avatarUrl = "https://github.com/square/avatar",
+                    htmlUrl = "https://github.com/square"
+                )
             )
         )
         val fakeResponse = Json.encodeToString(ListSerializer(GitHubRepo.serializer()), fakeRepos)
