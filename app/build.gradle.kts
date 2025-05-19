@@ -5,34 +5,23 @@ plugins {
 }
 
 android {
-    namespace = "com.antoniok.reposcope"
-    compileSdk = 35
+    namespace = NameSpace.APP
+    compileSdk = SDKVersion.COMPILE_VERSION
 
     defaultConfig {
-        applicationId = "com.antoniok.reposcope"
-        minSdk = 30
-        targetSdk = 35
+        applicationId = NameSpace.APP
         versionCode = 1
         versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = SDKVersion.APP_RELEASE_MINIFY_ENABLED
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
     }
     buildFeatures {
         compose = true
@@ -40,6 +29,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:data-source:remote"))
+
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
