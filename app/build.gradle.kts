@@ -5,34 +5,23 @@ plugins {
 }
 
 android {
-    namespace = "com.antoniok.reposcope"
-    compileSdk = 35
+    namespace = NameSpace.APP
+    compileSdk = SDKVersion.COMPILE_VERSION
 
     defaultConfig {
-        applicationId = "com.antoniok.reposcope"
-        minSdk = 30
-        targetSdk = 35
+        applicationId = NameSpace.APP
         versionCode = 1
         versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = SDKVersion.APP_RELEASE_MINIFY_ENABLED
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
     }
     buildFeatures {
         compose = true
@@ -40,20 +29,34 @@ android {
 }
 
 dependencies {
+    // Dependency Injection - Koin
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
 
+    // Core Android
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+
+    // Jetpack Compose BOM
     implementation(platform(libs.androidx.compose.bom))
+
+    // Compose UI
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    // Unit Testing
     testImplementation(libs.junit)
+
+    // Instrumented Tests
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
+    // Debugging Tools
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }

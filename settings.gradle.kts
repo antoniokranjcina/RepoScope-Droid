@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "RepoScope"
 include(":app")
+include(":core:data-source:remote")
