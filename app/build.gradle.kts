@@ -29,6 +29,9 @@ android {
 }
 
 dependencies {
+    implementation(project(Module.DATA_SOURCE_REMOTE))
+    implementation(project(Module.DATA_SOURCE_LOCAL))
+
     // Dependency Injection - Koin
     implementation(libs.koin.android)
     implementation(libs.koin.compose)

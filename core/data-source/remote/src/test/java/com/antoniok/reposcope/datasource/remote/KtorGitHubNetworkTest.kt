@@ -22,7 +22,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-class KtorGitHubNetworkTest {
+internal class KtorGitHubNetworkTest {
 
     private lateinit var mockEngine: MockEngine
     private lateinit var httpClient: HttpClient
