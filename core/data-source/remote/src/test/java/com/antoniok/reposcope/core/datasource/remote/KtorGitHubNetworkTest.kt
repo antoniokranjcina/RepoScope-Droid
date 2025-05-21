@@ -1,8 +1,8 @@
 package com.antoniok.reposcope.core.datasource.remote
 
 import com.antoniok.reposcope.core.datasource.remote.api.KtorGitHubNetwork
-import com.antoniok.reposcope.core.datasource.remote.model.GitHubRepo
-import com.antoniok.reposcope.core.datasource.remote.model.Owner
+import com.antoniok.reposcope.core.datasource.remote.model.GitHubRepoDto
+import com.antoniok.reposcope.core.datasource.remote.model.OwnerDto
 import com.antoniok.reposcope.core.datasource.remote.resource.NetworkResource
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
@@ -26,7 +26,7 @@ internal class KtorGitHubNetworkTest {
 
     private lateinit var mockEngine: MockEngine
     private lateinit var httpClient: HttpClient
-    private lateinit var dataSource: RepoScopeDataSource
+    private lateinit var dataSource: RepoScopeRemoteDataSource
 
     private val baseUrl = "https://api.github.com"
 
@@ -59,21 +59,21 @@ internal class KtorGitHubNetworkTest {
     @Test
     fun `getOrganizationRepos returns Success on valid response`() = runTest {
         val fakeRepos = listOf(
-            GitHubRepo(
+            GitHubRepoDto(
                 id = 1,
                 name = "Repo1",
                 fullName = "square/Repo1",
                 htmlUrl = "https://github.com/square/Repo1",
                 description = "Test repo",
                 language = "Kotlin",
-                owner = Owner(
+                owner = OwnerDto(
                     id = 1,
                     avatarUrl = "https://github.com/square/avatar",
                     htmlUrl = "https://github.com/square"
                 )
             )
         )
-        val fakeResponse = Json.encodeToString(ListSerializer(GitHubRepo.serializer()), fakeRepos)
+        val fakeResponse = Json.encodeToString(ListSerializer(GitHubRepoDto.serializer()), fakeRepos)
 
 
         mockEngine = MockEngine { _ ->

@@ -31,6 +31,7 @@ android {
 dependencies {
     implementation(project(Module.DATA_SOURCE_REMOTE))
     implementation(project(Module.DATA_SOURCE_LOCAL))
+    implementation(project(Module.DATA))
     implementation(project(Module.REPOSITORIES))
 
     // Dependency Injection - Koin
@@ -41,6 +42,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.work.runtime.ktx)
 
     // Navigation
     implementation(libs.androidx.navigation)

@@ -17,6 +17,13 @@ android {
 }
 
 dependencies {
+    implementation(project(Module.DATA))
+    implementation(project(Module.MODEL))
+    implementation(project(Module.UI))
+
+    // Dependency Injection - Koin
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
 
     // Navigation
     implementation(libs.androidx.navigation)

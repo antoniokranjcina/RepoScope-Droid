@@ -24,7 +24,7 @@ public data class GitHubRepoEntity(
     @ColumnInfo(name = "html_url")
     val htmlUrl: String,
     @ColumnInfo(name = "description")
-    val description: String,
+    val description: String?,
     @ColumnInfo(name = "language")
-    val language: String
+    val language: String?
 )

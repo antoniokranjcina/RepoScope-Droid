@@ -4,8 +4,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
-import com.antoniok.reposcope.feature.repositories.RepositoriesScreen
-import com.antoniok.reposcope.feature.repositories.RepositoryDetailsScreen
+import com.antoniok.reposcope.feature.repositories.screen.repos.RepositoriesScreen
+import com.antoniok.reposcope.feature.repositories.screen.details.RepositoryDetailsScreen
 import kotlinx.serialization.Serializable
 
 @Serializable data object RepoNavigation

@@ -1,13 +1,14 @@
-package com.antoniok.reposcope.feature.repositories
+package com.antoniok.reposcope.feature.repositories.screen.details
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun RepositoryDetailsScreen(
+internal fun RepositoryDetailsScreen(
     repoId: Long,
     modifier: Modifier = Modifier
 ) {
@@ -22,7 +23,7 @@ private fun RepositoryDetailsContent(
     repoId: Long,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.fillMaxSize()) {
         Text("Repository Details Screen: $repoId")
     }
 }
