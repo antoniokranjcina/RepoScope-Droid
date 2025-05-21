@@ -1,4 +1,4 @@
-package com.antoniok.reposcope.datasource.remote.resource
+package com.antoniok.reposcope.core.datasource.remote.resource
 
 public sealed class NetworkResource<T> {
     public data class Success<T>(val data: T) : NetworkResource<T>()

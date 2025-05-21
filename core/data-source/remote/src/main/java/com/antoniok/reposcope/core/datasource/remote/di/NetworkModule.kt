@@ -1,8 +1,8 @@
-package com.antoniok.reposcope.datasource.remote.di
+package com.antoniok.reposcope.core.datasource.remote.di
 
-import com.antoniok.reposcope.datasource.remote.BuildConfig
-import com.antoniok.reposcope.datasource.remote.RepoScopeDataSource
-import com.antoniok.reposcope.datasource.remote.api.KtorGitHubNetwork
+import com.antoniok.reposcope.core.datasource.remote.BuildConfig
+import com.antoniok.reposcope.core.datasource.remote.RepoScopeDataSource
+import com.antoniok.reposcope.core.datasource.remote.api.KtorGitHubNetwork
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
