@@ -1,9 +1,9 @@
-package com.antoniok.reposcope.datasource.remote
+package com.antoniok.reposcope.core.datasource.remote
 
-import com.antoniok.reposcope.datasource.remote.api.KtorGitHubNetwork
-import com.antoniok.reposcope.datasource.remote.model.GitHubRepo
-import com.antoniok.reposcope.datasource.remote.model.Owner
-import com.antoniok.reposcope.datasource.remote.resource.NetworkResource
+import com.antoniok.reposcope.core.datasource.remote.api.KtorGitHubNetwork
+import com.antoniok.reposcope.core.datasource.remote.model.GitHubRepo
+import com.antoniok.reposcope.core.datasource.remote.model.Owner
+import com.antoniok.reposcope.core.datasource.remote.resource.NetworkResource
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond

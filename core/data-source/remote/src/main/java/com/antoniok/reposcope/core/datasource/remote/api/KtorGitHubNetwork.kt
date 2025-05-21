@@ -1,9 +1,9 @@
-package com.antoniok.reposcope.datasource.remote.api
+package com.antoniok.reposcope.core.datasource.remote.api
 
-import com.antoniok.reposcope.datasource.remote.RepoScopeDataSource
-import com.antoniok.reposcope.datasource.remote.model.GitHubRepo
-import com.antoniok.reposcope.datasource.remote.resource.NetworkResource
-import com.antoniok.reposcope.datasource.remote.resource.safeApiCall
+import com.antoniok.reposcope.core.datasource.remote.RepoScopeDataSource
+import com.antoniok.reposcope.core.datasource.remote.model.GitHubRepo
+import com.antoniok.reposcope.core.datasource.remote.resource.NetworkResource
+import com.antoniok.reposcope.core.datasource.remote.resource.safeApiCall
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 

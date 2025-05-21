@@ -3,6 +3,6 @@ object NameSpace {
 
     const val APP = DEFAULT
 
-    const val CORE_DATA_SOURCE_REMOTE = "$DEFAULT.datasource.remote"
-    const val CORE_DATA_SOURCE_LOCAL = "$DEFAULT.datasource.local"
+    const val CORE_DATA_SOURCE_REMOTE = "$DEFAULT.core.datasource.remote"
+    const val CORE_DATA_SOURCE_LOCAL = "$DEFAULT.core.datasource.local"
 }

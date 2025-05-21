@@ -1,13 +1,12 @@
-package com.antoniok.reposcope.datasource.remote
+package com.antoniok.reposcope.core.datasource.remote
 
-import com.antoniok.reposcope.datasource.remote.model.GitHubRepo
-import com.antoniok.reposcope.datasource.remote.resource.NetworkResource
+import com.antoniok.reposcope.core.datasource.remote.model.GitHubRepo
+import com.antoniok.reposcope.core.datasource.remote.resource.NetworkResource
 
 /**
  * Data source interface for fetching GitHub repositories related to a specific organization.
  */
 public interface RepoScopeDataSource {
-
     /**
      * Retrieves a list of public repositories for the given GitHub organization.
      *
