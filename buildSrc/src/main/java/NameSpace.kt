@@ -5,4 +5,6 @@ object NameSpace {
 
     const val CORE_DATA_SOURCE_REMOTE = "$DEFAULT.core.datasource.remote"
     const val CORE_DATA_SOURCE_LOCAL = "$DEFAULT.core.datasource.local"
+
+    const val FEATURE_REPOSITORIES = "$DEFAULT.feature.repositories"
 }

@@ -15,6 +15,7 @@ koin = "3.5.3"
 ksp = "2.0.21-1.0.27"
 lifecycleRuntimeKtx = "2.9.0"
 material = "1.12.0"
+navigation = "2.9.0"
 room = "2.7.1"
 runner = "1.6.2"
 serialization = "1.7.3"
@@ -33,6 +34,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }

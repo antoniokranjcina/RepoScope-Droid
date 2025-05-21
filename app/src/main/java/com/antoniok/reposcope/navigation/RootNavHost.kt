@@ -1,0 +1,29 @@
+package com.antoniok.reposcope.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import com.antoniok.reposcope.feature.repositories.navigation.RepoDetails
+import com.antoniok.reposcope.feature.repositories.navigation.RepoNavigation
+import com.antoniok.reposcope.feature.repositories.navigation.repositoriesSection
+import com.antoniok.reposcope.ui.root.RootScreenAppState
+
+@Composable
+fun RootNavHost(
+    appState: RootScreenAppState,
+    modifier: Modifier = Modifier,
+) {
+    NavHost(
+        navController = appState.navController,
+        startDestination = RepoNavigation,
+        modifier = modifier
+    ) {
+        repositoriesSection(
+            onNavigateToDetails = { repoId ->
+                appState.navController.navigate(
+                    RepoDetails(repoId = repoId)
+                )
+            }
+        )
+    }
+}
