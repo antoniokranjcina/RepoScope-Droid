@@ -31,6 +31,7 @@ android {
 dependencies {
     implementation(project(Module.DATA_SOURCE_REMOTE))
     implementation(project(Module.DATA_SOURCE_LOCAL))
+    implementation(project(Module.REPOSITORIES))
 
     // Dependency Injection - Koin
     implementation(libs.koin.android)
@@ -40,6 +41,9 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+
+    // Navigation
+    implementation(libs.androidx.navigation)
 
     // Jetpack Compose BOM
     implementation(platform(libs.androidx.compose.bom))
