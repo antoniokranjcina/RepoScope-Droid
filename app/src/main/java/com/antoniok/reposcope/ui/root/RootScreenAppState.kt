@@ -9,15 +9,14 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun rememberRootScreenAppState(
     navController: NavHostController = rememberNavController(),
-): RootScreenAppState {
-    return remember(
-        navController
-    ) {
-        RootScreenAppState(
-            navController = navController,
-        )
-    }
+): RootScreenAppState = remember(
+    navController
+) {
+    RootScreenAppState(
+        navController = navController,
+    )
 }
+
 
 @Stable
 class RootScreenAppState(
