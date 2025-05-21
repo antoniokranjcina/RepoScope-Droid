@@ -1,7 +1,7 @@
 package com.antoniok.reposcope.core.datasource.remote.di
 
 import com.antoniok.reposcope.core.datasource.remote.BuildConfig
-import com.antoniok.reposcope.core.datasource.remote.RepoScopeDataSource
+import com.antoniok.reposcope.core.datasource.remote.RepoScopeRemoteDataSource
 import com.antoniok.reposcope.core.datasource.remote.api.KtorGitHubNetwork
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
@@ -17,7 +17,7 @@ public val networkModule: Module = module {
     }
 }
 
-private fun provideGitHubNetwork(): RepoScopeDataSource =
+private fun provideGitHubNetwork(): RepoScopeRemoteDataSource =
     KtorGitHubNetwork(
         client = HttpClient(CIO) {
             install(ContentNegotiation) {

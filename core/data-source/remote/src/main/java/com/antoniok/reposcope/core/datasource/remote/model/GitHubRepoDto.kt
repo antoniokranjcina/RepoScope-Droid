@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-public data class GitHubRepo(
+public data class GitHubRepoDto(
     @SerialName("id")
     val id: Long,
     @SerialName("name")
@@ -12,7 +12,7 @@ public data class GitHubRepo(
     @SerialName("full_name")
     val fullName: String,
     @SerialName("owner")
-    val owner: Owner,
+    val owner: OwnerDto,
     @SerialName("html_url")
     val htmlUrl: String,
     @SerialName("description")
