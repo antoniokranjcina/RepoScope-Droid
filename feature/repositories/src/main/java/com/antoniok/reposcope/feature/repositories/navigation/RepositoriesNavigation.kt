@@ -1,31 +1,22 @@
 package com.antoniok.reposcope.feature.repositories.navigation
 
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import androidx.navigation.toRoute
-import com.antoniok.reposcope.feature.repositories.screen.repos.RepositoriesScreen
-import com.antoniok.reposcope.feature.repositories.screen.details.RepositoryDetailsScreen
+import com.antoniok.reposcope.feature.repositories.screen.details.repositoryDetailsScreen
+import com.antoniok.reposcope.feature.repositories.screen.feed.RepositoriesFeed
+import com.antoniok.reposcope.feature.repositories.screen.feed.repositoriesScreen
 import kotlinx.serialization.Serializable
 
-@Serializable data object RepoNavigation
-
-@Serializable data object RepoList
-@Serializable data class RepoDetails(val repoId: Long)
+@Serializable
+data object RepoNavigation
 
 fun NavGraphBuilder.repositoriesSection(
     onNavigateToDetails: (id: Long) -> Unit
 ) {
-    navigation<RepoNavigation>(startDestination = RepoList) {
-        composable<RepoList> {
-            RepositoriesScreen(
-                onNavigateToDetails = onNavigateToDetails
-            )
-        }
-        composable<RepoDetails> {
-            RepositoryDetailsScreen(
-                repoId = it.toRoute<RepoDetails>().repoId
-            )
-        }
+    navigation<RepoNavigation>(startDestination = RepositoriesFeed) {
+        repositoriesScreen(
+            onNavigateToDetails = onNavigateToDetails
+        )
+        repositoryDetailsScreen()
     }
 }

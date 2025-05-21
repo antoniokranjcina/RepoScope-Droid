@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="repo_details_full_name_label">Full Name:</string>
+    <string name="repo_details_owner_label">Owner:</string>
+    <string name="repo_details_view_owner_profile">View Owner Profile</string>
+    <string name="repo_details_language_label">Language:</string>
+    <string name="repo_details_unknown_language">Unknown Language</string>
+    <string name="repo_details_description_label">Description:</string>
+    <string name="repo_details_no_description">No description provided</string>
+    <string name="repo_details_view_on_github">View on GitHub</string>
+    <string name="repo_details_created_at">Created at</string>
+    <string name="repo_details_updated_at">Updated at</string>
+
+    <string name="repo_details_watchers">Watchers</string>
+    <string name="repo_details_stars">Stars</string>
+    <string name="repo_details_forks">Forks</string>
+    <string name="repo_details_open_issues">Open Issues</string>
+
+    <string name="repo_details_homepage_label">Homepage:</string>
+    <string name="repo_details_no_homepage">No homepage</string>
+    <string name="repo_details_default_branch_label">Default Branch:</string>
+    <string name="repo_details_forked_label">Forked:</string>
+    <string name="repo_details_archived_label">Archived:</string>
+    <string name="repo_details_disabled_label">Disabled:</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+</resources>

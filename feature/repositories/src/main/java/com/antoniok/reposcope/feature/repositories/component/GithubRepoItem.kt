@@ -13,9 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.antoniok.reposcope.core.model.GitHubRepo
-import com.antoniok.reposcope.core.model.Owner
+import com.antoniok.reposcope.core.ui.GitHubRepoPreviewParameterProvider
 
 @Composable
 internal fun GithubRepoItem(
@@ -26,7 +27,6 @@ internal fun GithubRepoItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
             .clickable { onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
@@ -46,21 +46,12 @@ internal fun GithubRepoItem(
 
 @Preview
 @Composable
-private fun GithubRepoItemPreview() {
+private fun GithubRepoItemPreview(
+    @PreviewParameter(GitHubRepoPreviewParameterProvider::class)
+    repo: GitHubRepo
+) {
     GithubRepoItem(
-        repo = GitHubRepo(
-            id = 0,
-            name = "NowInAndroid",
-            fullName = "android/NowInAndroid",
-            owner = Owner(
-                id = 1,
-                avatarUrl = "www.image.com",
-                htmlUrl = "www.github.com/android"
-            ),
-            htmlUrl = "www.github.com/android",
-            description = "Cool Repo",
-            language = "Kotlin",
-        ),
+        repo = repo,
         onClick = {}
     )
 }

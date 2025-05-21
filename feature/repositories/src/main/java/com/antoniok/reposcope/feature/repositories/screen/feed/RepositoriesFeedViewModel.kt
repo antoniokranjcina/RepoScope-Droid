@@ -1,4 +1,4 @@
-package com.antoniok.reposcope.feature.repositories.screen.repos
+package com.antoniok.reposcope.feature.repositories.screen.feed
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,23 +11,23 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 
-class RepositoriesViewModel(
+internal class RepositoriesFeedViewModel(
     repoScopeRepository: RepoScopeRepository
 ) : ViewModel() {
-    val repositoriesUiState: StateFlow<RepositoriesUiState> =
+    val feedUiState: StateFlow<FeedUiState> =
         repoScopeRepository.gitHubRepos
-            .map<List<GitHubRepo>, RepositoriesUiState>(RepositoriesUiState::Success)
-            .onStart { emit(RepositoriesUiState.Loading) }
-            .catch { emit(RepositoriesUiState.Error(it)) }
+            .map<List<GitHubRepo>, FeedUiState>(FeedUiState::Success)
+            .onStart { emit(FeedUiState.Loading) }
+            .catch { emit(FeedUiState.Error(it)) }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = RepositoriesUiState.Loading,
+                initialValue = FeedUiState.Loading,
             )
 }
 
-sealed interface RepositoriesUiState {
-    data class Success(val gitHubRepositories: List<GitHubRepo>) : RepositoriesUiState
-    data class Error(val throwable: Throwable? = null) : RepositoriesUiState
-    data object Loading : RepositoriesUiState
+sealed interface FeedUiState {
+    data class Success(val repos: List<GitHubRepo>) : FeedUiState
+    data class Error(val throwable: Throwable? = null) : FeedUiState
+    data object Loading : FeedUiState
 }

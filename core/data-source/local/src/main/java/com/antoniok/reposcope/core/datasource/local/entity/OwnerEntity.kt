@@ -10,6 +10,8 @@ public data class OwnerEntity(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "owner_id")
     val id: Long,
+    @ColumnInfo(name = "login")
+    val login: String? = null,
     @ColumnInfo(name = "avatar_url")
     val avatarUrl: String,
     @ColumnInfo(name = "owner_html_url")

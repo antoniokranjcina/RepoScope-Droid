@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">RepoScope</string>
+
+    <string name="feed_title">Repositories</string>
+    <string name="feed_details_title">Repository Details</string>
+
+    <string name="back_arrow_content_description">Back Arrow</string>
 </resources>

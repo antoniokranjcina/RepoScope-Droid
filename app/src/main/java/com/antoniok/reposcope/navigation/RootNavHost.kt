@@ -3,13 +3,13 @@ package com.antoniok.reposcope.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import com.antoniok.reposcope.feature.repositories.navigation.RepoDetails
 import com.antoniok.reposcope.feature.repositories.navigation.RepoNavigation
 import com.antoniok.reposcope.feature.repositories.navigation.repositoriesSection
+import com.antoniok.reposcope.feature.repositories.screen.details.RepoDetails
 import com.antoniok.reposcope.ui.root.RootScreenAppState
 
 @Composable
-fun RootNavHost(
+internal fun RootNavHost(
     appState: RootScreenAppState,
     modifier: Modifier = Modifier,
 ) {
