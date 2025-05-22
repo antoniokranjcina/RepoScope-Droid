@@ -16,7 +16,14 @@ internal class RepositoriesFeedViewModel(
 ) : ViewModel() {
     val feedUiState: StateFlow<FeedUiState> =
         repoScopeRepository.gitHubRepos
-            .map<List<GitHubRepo>, FeedUiState>(FeedUiState::Success)
+            .map {
+                // TODO check here if there is an network error or is actually empty
+                if (it.isEmpty()) {
+                    FeedUiState.Empty
+                } else {
+                    FeedUiState.Success(it)
+                }
+            }
             .onStart { emit(FeedUiState.Loading) }
             .catch { emit(FeedUiState.Error(it)) }
             .stateIn(
@@ -26,8 +33,9 @@ internal class RepositoriesFeedViewModel(
             )
 }
 
-sealed interface FeedUiState {
+internal sealed interface FeedUiState {
     data class Success(val repos: List<GitHubRepo>) : FeedUiState
+    data object Empty : FeedUiState
     data class Error(val throwable: Throwable? = null) : FeedUiState
     data object Loading : FeedUiState
 }

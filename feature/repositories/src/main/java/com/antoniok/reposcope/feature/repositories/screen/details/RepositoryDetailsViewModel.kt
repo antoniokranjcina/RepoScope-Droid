@@ -39,7 +39,7 @@ internal class RepositoryDetailViewModel(
     }
 }
 
-sealed interface DetailUiState {
+internal sealed interface DetailUiState {
     data class Success(val repo: GitHubRepo) : DetailUiState
     data class Error(val throwable: Throwable? = null) : DetailUiState
     data object Loading : DetailUiState

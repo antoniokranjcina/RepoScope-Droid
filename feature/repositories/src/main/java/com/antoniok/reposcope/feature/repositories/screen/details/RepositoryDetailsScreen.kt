@@ -1,8 +1,7 @@
 package com.antoniok.reposcope.feature.repositories.screen.details
 
 import android.content.Intent
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,6 +43,7 @@ import coil3.request.crossfade
 import com.antoniok.reposcope.core.model.GitHubRepo
 import com.antoniok.reposcope.core.ui.GitHubRepoPreviewParameterProvider
 import com.antoniok.reposcope.feature.repositories.R
+import com.antoniok.reposcope.feature.repositories.screen.component.ErrorScreenContent
 import com.antoniok.reposcope.feature.repositories.screen.details.component.DateItem
 import com.antoniok.reposcope.feature.repositories.screen.details.component.InfoLabelValue
 import com.antoniok.reposcope.feature.repositories.screen.details.component.RepoStatsRow
@@ -74,30 +74,44 @@ internal fun RepositoryDetailsScreen(
     val viewModel: RepositoryDetailViewModel = koinViewModel { parametersOf(repoId) }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    when (uiState) {
-        is DetailUiState.Success -> {
-            RepositoryDetailsContent(
-                repo = (uiState as DetailUiState.Success).repo,
+    RepositoryDetailsContent(
+        uiState = uiState,
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun RepositoryDetailsContent(
+    uiState: DetailUiState,
+    modifier: Modifier = Modifier
+) {
+    AnimatedContent(
+        targetState = uiState,
+        label = "details-ui-state"
+    ) { state ->
+        when (state) {
+            is DetailUiState.Success -> RepositoryDetailsSuccessContent(
+                repo = state.repo,
                 modifier = modifier
             )
-        }
 
-        is DetailUiState.Error -> {
-            Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("Failed to load repository details.")
-            }
-        }
-
-        DetailUiState.Loading -> {
-            Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
-            }
+            is DetailUiState.Error -> RepositoryDetailsErrorContent(modifier = modifier)
+            DetailUiState.Loading -> RepositoryDetailsLoadingContent(modifier = modifier)
         }
     }
 }
 
 @Composable
-private fun RepositoryDetailsContent(
+private fun RepositoryDetailsLoadingContent(
+    modifier: Modifier = Modifier
+) {
+    Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        CircularProgressIndicator()
+    }
+}
+
+@Composable
+private fun RepositoryDetailsSuccessContent(
     repo: GitHubRepo,
     modifier: Modifier = Modifier
 ) {
@@ -225,6 +239,17 @@ private fun RepositoryDetailsContent(
     }
 }
 
+@Composable
+private fun RepositoryDetailsErrorContent(
+    modifier: Modifier = Modifier
+) {
+    ErrorScreenContent(
+        subtitle = stringResource(id = R.string.repo_details_error_subtitle),
+        modifier = modifier
+    )
+}
+
+
 // TODO probably should save instant to DB
 fun String?.formatDate(): String = try {
     val instant = Instant.parse(this)
@@ -238,11 +263,23 @@ fun String?.formatDate(): String = try {
 
 @Preview
 @Composable
-private fun RepositoryDetailsContentPreview(
+private fun RepositoryDetailsContentLoadingPreview() {
+    RepositoryDetailsLoadingContent()
+}
+
+@Preview
+@Composable
+private fun RepositoryDetailsContentSuccessPreview(
     @PreviewParameter(GitHubRepoPreviewParameterProvider::class)
     gitHubRepo: GitHubRepo
 ) {
-    RepositoryDetailsContent(
+    RepositoryDetailsSuccessContent(
         repo = gitHubRepo
     )
+}
+
+@Preview
+@Composable
+private fun RepositoryDetailsContentErrorPreview() {
+    RepositoryDetailsErrorContent()
 }

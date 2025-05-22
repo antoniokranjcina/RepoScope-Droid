@@ -1,17 +1,28 @@
 package com.antoniok.reposcope.feature.repositories.screen.feed
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Inbox
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -20,7 +31,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.antoniok.reposcope.core.model.GitHubRepo
 import com.antoniok.reposcope.core.ui.GitHubReposPreviewParameterProvider
+import com.antoniok.reposcope.feature.repositories.R
 import com.antoniok.reposcope.feature.repositories.component.GithubRepoItem
+import com.antoniok.reposcope.feature.repositories.screen.component.ErrorScreenContent
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 
@@ -38,70 +51,157 @@ internal fun NavGraphBuilder.repositoriesScreen(
 }
 
 @Composable
-internal fun RepositoriesFeedScreen(
+private fun RepositoriesFeedScreen(
     onNavigateToDetails: (id: Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RepositoriesFeedViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.feedUiState.collectAsStateWithLifecycle()
 
-    RepositoriesFeedContent(
+    RepositoriesFeedScreenContent(
         uiState = uiState,
         onNavigateToDetails = onNavigateToDetails,
+        onRetry = {},
         modifier = modifier
     )
 }
 
 @Composable
-private fun RepositoriesFeedContent(
+private fun RepositoriesFeedScreenContent(
     uiState: FeedUiState,
     onNavigateToDetails: (id: Long) -> Unit,
+    onRetry: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    when (uiState) {
-        is FeedUiState.Loading -> {
-            Box(
-                modifier = modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        }
+    AnimatedContent(
+        targetState = uiState,
+        label = "feed-ui-state"
+    ) { state ->
+        when (state) {
+            is FeedUiState.Success -> RepositoriesFeedContent(
+                repos = state.repos,
+                onNavigateToDetails = onNavigateToDetails,
+                modifier = modifier
+            )
 
-        is FeedUiState.Error -> {
-            Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("An error occurred. Please try again.")
-            }
-        }
+            FeedUiState.Empty -> RepositoriesFeedEmptyContent()
 
-        is FeedUiState.Success -> {
-            LazyColumn(
-                modifier = modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(horizontal = 8.dp)
-            ) {
-                items(
-                    items = uiState.repos,
-                    key = { it.id }
-                ) { repo ->
-                    GithubRepoItem(
-                        repo = repo,
-                        onClick = { onNavigateToDetails(repo.id) }
-                    )
-                }
-            }
+            is FeedUiState.Error -> RepositoriesFeedErrorContent(
+                onRetry = onRetry,
+                modifier = modifier
+            )
+
+            FeedUiState.Loading -> RepositoriesFeedLoadingContent(modifier = modifier)
         }
     }
 }
 
+@Composable
+private fun RepositoriesFeedLoadingContent(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator()
+    }
+}
+
+@Composable
+private fun RepositoriesFeedContent(
+    repos: List<GitHubRepo>, // TODO make this immutable
+    onNavigateToDetails: (id: Long) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 8.dp)
+    ) {
+        items(
+            items = repos,
+            key = { it.id }
+        ) { repo ->
+            GithubRepoItem(
+                repo = repo,
+                onClick = { onNavigateToDetails(repo.id) }
+            )
+        }
+    }
+}
+
+@Composable
+fun RepositoriesFeedEmptyContent(
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(32.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Inbox,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(72.dp)
+            )
+            Text(
+                text = stringResource(R.string.repo_feed_empty_title),
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold
+            )
+            Text(
+                text = stringResource(R.string.repo_feed_empty_subtitle),
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+}
+
+@Composable
+private fun RepositoriesFeedErrorContent(
+    onRetry: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    ErrorScreenContent(
+        subtitle = stringResource(id = R.string.repo_feed_error_subtitle),
+        onRetry = onRetry,
+        modifier = modifier
+    )
+}
+
 @Preview
 @Composable
-private fun RepositoriesFeedContentPreview(
+private fun RepositoriesFeedLoadingContentPreview() {
+    RepositoriesFeedLoadingContent()
+}
+
+@Preview
+@Composable
+private fun RepositoriesFeedSuccessContentPreview(
     @PreviewParameter(GitHubReposPreviewParameterProvider::class)
     gitHubRepositories: List<GitHubRepo>
 ) {
     RepositoriesFeedContent(
-        uiState = FeedUiState.Success(gitHubRepositories),
+        repos = gitHubRepositories,
         onNavigateToDetails = {}
     )
+}
+
+@Preview
+@Composable
+private fun RepositoriesFeedEmptyContentPreview() {
+    RepositoriesFeedEmptyContent()
+}
+
+@Preview
+@Composable
+private fun RepositoriesFeedErrorContentPreview() {
+    RepositoriesFeedErrorContent(onRetry = {})
 }
