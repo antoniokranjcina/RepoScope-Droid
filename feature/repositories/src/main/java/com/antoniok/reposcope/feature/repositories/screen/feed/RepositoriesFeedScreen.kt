@@ -13,9 +13,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Inbox
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -57,10 +60,13 @@ private fun RepositoriesFeedScreen(
     viewModel: RepositoriesFeedViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.feedUiState.collectAsStateWithLifecycle()
+    val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
 
     RepositoriesFeedScreenContent(
         uiState = uiState,
+        isRefreshing = isRefreshing,
         onNavigateToDetails = onNavigateToDetails,
+        onRefresh = { viewModel.refreshRepos() },
         onRetry = {},
         modifier = modifier
     )
@@ -69,7 +75,9 @@ private fun RepositoriesFeedScreen(
 @Composable
 private fun RepositoriesFeedScreenContent(
     uiState: FeedUiState,
+    isRefreshing: Boolean,
     onNavigateToDetails: (id: Long) -> Unit,
+    onRefresh: () -> Unit,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -79,8 +87,10 @@ private fun RepositoriesFeedScreenContent(
     ) { state ->
         when (state) {
             is FeedUiState.Success -> RepositoriesFeedContent(
+                isRefreshing = isRefreshing,
                 repos = state.repos,
                 onNavigateToDetails = onNavigateToDetails,
+                onRefresh = onRefresh,
                 modifier = modifier
             )
 
@@ -106,25 +116,38 @@ private fun RepositoriesFeedLoadingContent(modifier: Modifier = Modifier) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RepositoriesFeedContent(
+    isRefreshing: Boolean,
     repos: List<GitHubRepo>, // TODO make this immutable
     onNavigateToDetails: (id: Long) -> Unit,
+    onRefresh: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(horizontal = 8.dp)
+    val pullRefreshState = rememberPullToRefreshState()
+    PullToRefreshBox(
+        state = pullRefreshState,
+        isRefreshing = isRefreshing,
+        onRefresh = onRefresh,
+        modifier = modifier
+            .fillMaxSize()
+            .padding(top = 8.dp)
     ) {
-        items(
-            items = repos,
-            key = { it.id }
-        ) { repo ->
-            GithubRepoItem(
-                repo = repo,
-                onClick = { onNavigateToDetails(repo.id) }
-            )
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(horizontal = 8.dp)
+        ) {
+            items(
+                items = repos,
+                key = { it.id }
+            ) { repo ->
+                GithubRepoItem(
+                    repo = repo,
+                    onClick = { onNavigateToDetails(repo.id) }
+                )
+            }
         }
     }
 }
@@ -192,8 +215,10 @@ private fun RepositoriesFeedSuccessContentPreview(
 ) {
     MaterialTheme {
         RepositoriesFeedContent(
+            isRefreshing = false,
             repos = gitHubRepositories,
-            onNavigateToDetails = {}
+            onNavigateToDetails = {},
+            onRefresh = {}
         )
     }
 }
