@@ -261,25 +261,31 @@ fun String?.formatDate(): String = try {
 }
 
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun RepositoryDetailsContentLoadingPreview() {
-    RepositoryDetailsLoadingContent()
+    MaterialTheme {
+        RepositoryDetailsLoadingContent()
+    }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun RepositoryDetailsContentSuccessPreview(
     @PreviewParameter(GitHubRepoPreviewParameterProvider::class)
     gitHubRepo: GitHubRepo
 ) {
-    RepositoryDetailsSuccessContent(
-        repo = gitHubRepo
-    )
+    MaterialTheme {
+        RepositoryDetailsSuccessContent(
+            repo = gitHubRepo
+        )
+    }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun RepositoryDetailsContentErrorPreview() {
-    RepositoryDetailsErrorContent()
+    MaterialTheme {
+        RepositoryDetailsErrorContent()
+    }
 }

@@ -176,32 +176,40 @@ private fun RepositoriesFeedErrorContent(
     )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun RepositoriesFeedLoadingContentPreview() {
-    RepositoriesFeedLoadingContent()
+    MaterialTheme {
+        RepositoriesFeedLoadingContent()
+    }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun RepositoriesFeedSuccessContentPreview(
     @PreviewParameter(GitHubReposPreviewParameterProvider::class)
     gitHubRepositories: List<GitHubRepo>
 ) {
-    RepositoriesFeedContent(
-        repos = gitHubRepositories,
-        onNavigateToDetails = {}
-    )
+    MaterialTheme {
+        RepositoriesFeedContent(
+            repos = gitHubRepositories,
+            onNavigateToDetails = {}
+        )
+    }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun RepositoriesFeedEmptyContentPreview() {
-    RepositoriesFeedEmptyContent()
+    MaterialTheme {
+        RepositoriesFeedEmptyContent()
+    }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun RepositoriesFeedErrorContentPreview() {
-    RepositoriesFeedErrorContent(onRetry = {})
+    MaterialTheme {
+        RepositoriesFeedErrorContent(onRetry = {})
+    }
 }

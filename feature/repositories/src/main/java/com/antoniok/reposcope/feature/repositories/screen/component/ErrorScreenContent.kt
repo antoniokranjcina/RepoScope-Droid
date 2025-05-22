@@ -67,10 +67,12 @@ internal fun ErrorScreenContent(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun ErrorScreenContentPreview() {
-    ErrorScreenContent(
-        subtitle = "There is an error. Please try again later."
-    )
+    MaterialTheme {
+        ErrorScreenContent(
+            subtitle = "There is an error. Please try again later."
+        )
+    }
 }
