@@ -70,7 +70,10 @@ internal class KtorGitHubNetworkTest {
                     id = 1,
                     avatarUrl = "https://github.com/square/avatar",
                     htmlUrl = "https://github.com/square"
-                )
+                ),
+                defaultBranch = "master",
+                fork = true,
+                disabled = false
             )
         )
         val fakeResponse = Json.encodeToString(ListSerializer(GitHubRepoDto.serializer()), fakeRepos)

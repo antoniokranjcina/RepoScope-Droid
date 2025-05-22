@@ -40,6 +40,10 @@ internal abstract class DatabaseTest {
             id = id,
             avatarUrl = "https://avatar.com/$id",
             htmlUrl = "https://github.com/owner"
-        )
+        ),
+        homepage = null,
+        defaultBranch = "master",
+        fork = true,
+        disabled = false
     )
 }

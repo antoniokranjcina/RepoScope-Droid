@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Repository Details Labels -->
+    <string name="repo_details_full_name_label">Full Name</string>
+    <string name="repo_details_owner_label">Owner</string>
+    <string name="repo_details_language_label">Language:</string>
+    <string name="repo_details_description_label">Description</string>
+    <string name="repo_details_created_at">Created at</string>
+    <string name="repo_details_updated_at">Updated at</string>
+    <string name="repo_details_homepage_label">Homepage:</string>
+    <string name="repo_details_default_branch_label">Default Branch:</string>
+    <string name="repo_details_forked_label">Forked:</string>
+    <string name="repo_details_archived_label">Archived:</string>
+    <string name="repo_details_disabled_label">Disabled:</string>
+
+    <!-- Repository Details Values -->
+    <string name="repo_details_unknown_language">Unknown Language</string>
+    <string name="repo_details_no_description">No description provided</string>
+    <string name="repo_details_no_homepage">No homepage</string>
+    <string name="repo_details_view_on_github">View on GitHub</string>
+    <string name="repo_details_view_owner_profile">View Owner Profile</string>
+
+    <!-- Repository Stats -->
+    <string name="repo_details_watchers">Watchers</string>
+    <string name="repo_details_stars">Stars</string>
+    <string name="repo_details_forks">Forks</string>
+    <string name="repo_details_open_issues">Open Issues</string>
+
+    <!-- Boolean Options -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!-- Errors -->
+    <string name="error_title">Oops! Something went wrong</string>
+    <string name="repo_details_error_subtitle">"We couldn't find the repository details. It may have been removed or is unavailable."</string>
+    <string name="repo_feed_error_subtitle">We couldn’t load the repositories. Please check your internet connection and try again.</string>
+
+    <!-- Empty State -->
+    <string name="repo_feed_empty_title">No Repositories Found</string>
+    <string name="repo_feed_empty_subtitle">We couldn’t find any repositories to show right now. Try again later or check your filters.</string>
+
+    <!-- Common -->
+    <string name="retry">Retry</string>
+</resources>

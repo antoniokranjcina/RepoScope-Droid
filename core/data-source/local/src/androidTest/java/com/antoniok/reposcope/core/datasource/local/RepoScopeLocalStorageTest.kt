@@ -2,7 +2,6 @@ package com.antoniok.reposcope.core.datasource.local
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
-import com.antoniok.reposcope.core.datasource.local.RepoScopeLocalStorage
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.Test

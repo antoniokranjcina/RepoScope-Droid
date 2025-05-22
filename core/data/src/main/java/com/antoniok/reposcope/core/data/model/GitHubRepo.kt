@@ -12,6 +12,18 @@ internal fun GitHubRepoEntity.asExternalModel(): GitHubRepo = GitHubRepo(
     htmlUrl = htmlUrl,
     description = description,
     language = language,
+    homepage = homepage,
+    defaultBranch = defaultBranch,
+    fork = fork,
+    disabled = disabled,
+    watchersCount = watchersCount,
+    forksCount = forksCount,
+    stargazersCount = stargazersCount,
+    hasIssues = hasIssues,
+    openIssuesCount = openIssuesCount,
+    archived = archived,
+    createdAt = createdAt,
+    updatedAt = updatedAt
 )
 
 internal fun GitHubRepoDto.asEntity(): GitHubRepoEntity = GitHubRepoEntity(
@@ -22,4 +34,17 @@ internal fun GitHubRepoDto.asEntity(): GitHubRepoEntity = GitHubRepoEntity(
     htmlUrl = htmlUrl,
     description = description,
     language = language,
+    homepage = homepage,
+    defaultBranch = defaultBranch,
+    fork = fork,
+    disabled = disabled,
+    watchersCount = watchersCount,
+    forksCount = forksCount,
+    stargazersCount = stargazersCount,
+    hasIssues = hasIssues,
+    openIssuesCount = openIssuesCount,
+    archived = archived,
+    createdAt = createdAt,
+    updatedAt = updatedAt
 )
+
