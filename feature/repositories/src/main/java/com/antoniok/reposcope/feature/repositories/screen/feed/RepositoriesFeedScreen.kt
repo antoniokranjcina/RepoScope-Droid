@@ -37,16 +37,18 @@ import com.antoniok.reposcope.core.ui.GitHubReposPreviewParameterProvider
 import com.antoniok.reposcope.feature.repositories.R
 import com.antoniok.reposcope.feature.repositories.component.GithubRepoItem
 import com.antoniok.reposcope.feature.repositories.screen.component.ErrorScreenContent
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 
 @Serializable
-data object RepositoriesFeed
+data object RepositoriesFeedDestination
 
 internal fun NavGraphBuilder.repositoriesScreen(
     onNavigateToDetails: (id: Long) -> Unit
 ) {
-    composable<RepositoriesFeed> {
+    composable<RepositoriesFeedDestination> {
         RepositoriesFeedScreen(
             onNavigateToDetails = onNavigateToDetails
         )
@@ -88,7 +90,7 @@ private fun RepositoriesFeedScreenContent(
         when (state) {
             is FeedUiState.Success -> RepositoriesFeedContent(
                 isRefreshing = isRefreshing,
-                repos = state.repos,
+                repos = state.repos.toImmutableList(),
                 onNavigateToDetails = onNavigateToDetails,
                 onRefresh = onRefresh,
                 modifier = modifier
@@ -120,7 +122,7 @@ private fun RepositoriesFeedLoadingContent(modifier: Modifier = Modifier) {
 @Composable
 private fun RepositoriesFeedContent(
     isRefreshing: Boolean,
-    repos: List<GitHubRepo>, // TODO make this immutable
+    repos: ImmutableList<GitHubRepo>,
     onNavigateToDetails: (id: Long) -> Unit,
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier
@@ -216,7 +218,7 @@ private fun RepositoriesFeedSuccessContentPreview(
     MaterialTheme {
         RepositoriesFeedContent(
             isRefreshing = false,
-            repos = gitHubRepositories,
+            repos = gitHubRepositories.toImmutableList(),
             onNavigateToDetails = {},
             onRefresh = {}
         )

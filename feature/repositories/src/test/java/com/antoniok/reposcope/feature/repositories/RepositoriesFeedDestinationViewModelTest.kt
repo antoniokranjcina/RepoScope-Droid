@@ -27,7 +27,7 @@ import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-internal class RepositoriesFeedViewModelTest {
+internal class RepositoriesFeedDestinationViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
     private val testScope = TestScope(testDispatcher)

@@ -21,6 +21,8 @@ dependencies {
     implementation(project(Module.MODEL))
     implementation(project(Module.UI))
 
+    implementation(libs.kotlinx.collections.immutable)
+
     // Dependency Injection - Koin
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
@@ -52,4 +54,3 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.junit)
 }
-

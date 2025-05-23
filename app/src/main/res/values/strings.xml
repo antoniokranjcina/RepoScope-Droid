@@ -3,6 +3,7 @@
 
     <string name="feed_title">Repositories</string>
     <string name="feed_details_title">Repository Details</string>
+    <string name="web_view_title" />
 
     <string name="back_arrow_content_description">Back Arrow</string>
 
