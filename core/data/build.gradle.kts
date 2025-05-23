@@ -21,4 +21,11 @@ dependencies {
     implementation(project(Module.MODEL))
 
     implementation(libs.koin.android)
+
+    // Tests
+    testImplementation(libs.turbine)
+    testImplementation(libs.ktor.client.mock)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.junit)
 }
