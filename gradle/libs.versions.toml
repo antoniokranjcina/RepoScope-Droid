@@ -11,6 +11,7 @@ espressoCore = "3.6.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 kotlin = "2.0.21"
+kotlinxCollectionsImmutable = "0.4.0"
 kotlinxCoroutinesTest = "1.9.0"
 ktor = "2.3.5"
 koin = "3.5.3"
@@ -66,6 +67,7 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 # Kotlin
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version = "kotlinxCoroutinesTest" }
+kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 
 # Ktor
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }

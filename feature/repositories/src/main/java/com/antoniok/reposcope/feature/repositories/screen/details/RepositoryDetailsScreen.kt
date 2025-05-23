@@ -1,6 +1,5 @@
 package com.antoniok.reposcope.feature.repositories.screen.details
 
-import android.content.Intent
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,7 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -47,21 +45,21 @@ import com.antoniok.reposcope.feature.repositories.screen.component.ErrorScreenC
 import com.antoniok.reposcope.feature.repositories.screen.details.component.DateItem
 import com.antoniok.reposcope.feature.repositories.screen.details.component.InfoLabelValue
 import com.antoniok.reposcope.feature.repositories.screen.details.component.RepoStatsRow
+import com.antoniok.reposcope.feature.repositories.screen.details.util.formatDate
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 @Serializable
-data class RepoDetails(val repoId: Long)
+data class RepoDetailsDestination(val repoId: Long)
 
-internal fun NavGraphBuilder.repositoryDetailsScreen() {
-    composable<RepoDetails> {
+internal fun NavGraphBuilder.repositoryDetailsScreen(
+    onNavigateToWebView: (url: String) -> Unit
+) {
+    composable<RepoDetailsDestination> {
         RepositoryDetailsScreen(
-            repoId = it.toRoute<RepoDetails>().repoId
+            repoId = it.toRoute<RepoDetailsDestination>().repoId,
+            onNavigateToWebView = onNavigateToWebView
         )
     }
 }
@@ -69,6 +67,7 @@ internal fun NavGraphBuilder.repositoryDetailsScreen() {
 @Composable
 internal fun RepositoryDetailsScreen(
     repoId: Long,
+    onNavigateToWebView: (url: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel: RepositoryDetailViewModel = koinViewModel { parametersOf(repoId) }
@@ -76,6 +75,7 @@ internal fun RepositoryDetailsScreen(
 
     RepositoryDetailsContent(
         uiState = uiState,
+        onNavigateToWebView = onNavigateToWebView,
         modifier = modifier
     )
 }
@@ -83,6 +83,7 @@ internal fun RepositoryDetailsScreen(
 @Composable
 private fun RepositoryDetailsContent(
     uiState: DetailUiState,
+    onNavigateToWebView: (url: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     AnimatedContent(
@@ -92,6 +93,7 @@ private fun RepositoryDetailsContent(
         when (state) {
             is DetailUiState.Success -> RepositoryDetailsSuccessContent(
                 repo = state.repo,
+                onNavigateToWebView = onNavigateToWebView,
                 modifier = modifier
             )
 
@@ -113,6 +115,7 @@ private fun RepositoryDetailsLoadingContent(
 @Composable
 private fun RepositoryDetailsSuccessContent(
     repo: GitHubRepo,
+    onNavigateToWebView: (url: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -180,8 +183,7 @@ private fun RepositoryDetailsSuccessContent(
                     Spacer(modifier = Modifier.width(8.dp))
                     TextButton(
                         onClick = {
-                            val intent = Intent(Intent.ACTION_VIEW, repo.owner.htmlUrl.toUri())
-                            context.startActivity(intent)
+                            onNavigateToWebView(repo.owner.htmlUrl)
                         },
                         content = {
                             Text(text = stringResource(R.string.repo_details_view_owner_profile))
@@ -231,8 +233,7 @@ private fun RepositoryDetailsSuccessContent(
 
         TextButton(
             onClick = {
-                val intent = Intent(Intent.ACTION_VIEW, repo.htmlUrl.toUri())
-                context.startActivity(intent)
+                onNavigateToWebView(repo.htmlUrl)
             },
             content = { Text(text = stringResource(R.string.repo_details_view_on_github)) }
         )
@@ -248,18 +249,6 @@ private fun RepositoryDetailsErrorContent(
         modifier = modifier
     )
 }
-
-
-// TODO probably should save instant to DB
-fun String?.formatDate(): String = try {
-    val instant = Instant.parse(this)
-    val formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
-        .withZone(ZoneId.systemDefault())
-    formatter.format(instant)
-} catch (e: Exception) {
-    this ?: ""
-}
-
 
 @Preview(showBackground = true)
 @Composable
@@ -277,7 +266,8 @@ private fun RepositoryDetailsContentSuccessPreview(
 ) {
     MaterialTheme {
         RepositoryDetailsSuccessContent(
-            repo = gitHubRepo
+            repo = gitHubRepo,
+            onNavigateToWebView = {}
         )
     }
 }
